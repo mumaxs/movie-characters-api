@@ -32,10 +32,9 @@ public class Movie {
     @ManyToMany(mappedBy = "characters")
     public List<Character> characters;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;
-
 
     public long getId() {
         return id;

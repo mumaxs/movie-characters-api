@@ -18,7 +18,6 @@ public class Franchise {
     private String description;
 
     @OneToMany
-    @JoinColumn(name = "franchise_id")
     List<Movie> movies;
 
     public Long getId() {
