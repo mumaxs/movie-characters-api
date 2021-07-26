@@ -29,9 +29,8 @@ public class Movie {
     @Column(name = "trailer")
     private String trailerURL;
 
-    @OneToMany
-    @JoinColumn(name = "character_id")
-    List<Character> characters;
+    @ManyToMany(mappedBy = "characters")
+    public List<Character> characters;
 
     @OneToOne
     @JoinColumn(name = "franchise_id")

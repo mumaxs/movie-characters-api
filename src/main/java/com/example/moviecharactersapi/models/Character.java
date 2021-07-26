@@ -28,7 +28,7 @@ public class Character {
             joinColumns = {@JoinColumn(name = "character_id")},
             inverseJoinColumns = {@JoinColumn(name = "movie_id")}
     )
-    public List<Movie> movies;
+    public List<Character> characters;
 
     public long getId() {
         return id;
