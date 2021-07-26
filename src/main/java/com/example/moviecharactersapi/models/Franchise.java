@@ -17,7 +17,7 @@ public class Franchise {
     @Column(name = "description")
     private String description;
 
-    @OneToMany
+    @OneToMany(mappedBy = "franchise")
     List<Movie> movies;
 
     public Long getId() {

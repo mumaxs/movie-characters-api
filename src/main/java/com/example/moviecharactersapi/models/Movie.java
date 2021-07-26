@@ -29,7 +29,7 @@ public class Movie {
     @Column(name = "trailer")
     private String trailerURL;
 
-    @ManyToMany(mappedBy = "characters")
+    @ManyToMany(mappedBy = "movies")
     public List<Character> characters;
 
     @ManyToOne

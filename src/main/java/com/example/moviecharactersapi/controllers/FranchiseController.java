@@ -14,7 +14,7 @@ public class FranchiseController {
     @Autowired
     private FranchiseRepository franchiseRepository;
 
-    @GetMapping("/")
+    @GetMapping("/allFranchises")
     public List<Franchise> getAllFranchises() {
         return franchiseRepository.findAll();
     }
