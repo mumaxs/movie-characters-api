@@ -1,6 +1,7 @@
 package com.example.moviecharactersapi.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Character {
@@ -21,6 +22,13 @@ public class Character {
     @Column(name = "picture")
     private String pictureURL;
 
+    @ManyToMany
+    @JoinTable(
+            name = "character_movies",
+            joinColumns = {@JoinColumn(name = "character_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
+    public List<Movie> movies;
 
     public long getId() {
         return id;
