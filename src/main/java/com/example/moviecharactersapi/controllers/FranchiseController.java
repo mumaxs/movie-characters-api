@@ -20,8 +20,24 @@ public class FranchiseController {
     private FranchiseRepository franchiseRepository;
 
     @GetMapping()
-    public List<Franchise> getAllFranchises() {
-        return franchiseRepository.findAll();
+    public ResponseEntity <List<Franchise>> getAllFranchises() {
+        List<Franchise> franchises = franchiseRepository.findAll();
+        HttpStatus status = HttpStatus.OK;
+        return new ResponseEntity<>(franchises, status);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Franchise> getFranchise(@PathVariable int id){
+        Franchise returnFranchise = new Franchise();
+        HttpStatus status;
+
+        if (franchiseRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            returnFranchise = franchiseRepository.findById(id).get();
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(returnFranchise, status);
     }
 
     @PostMapping
@@ -34,11 +50,25 @@ public class FranchiseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Franchise> deleteFranchise(@PathVariable long id, @RequestBody Franchise franchise) {
         for (Movie m: franchise.getMovies()) {
-            franchise.setMovies(null);
+            m.setFranchise(null);
         }
         franchiseRepository.delete(franchise);
         HttpStatus status;
         status = HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(franchise, status);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Franchise> updateFranchise(@PathVariable int id, @RequestBody Franchise franchise) {
+        Franchise returnFranchise = new Franchise();
+        HttpStatus status;
+
+        if (id != franchise.getId()) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnFranchise, status);
+        }
+        returnFranchise = franchiseRepository.save(franchise);
+        status = HttpStatus.NO_CONTENT;
+        return new ResponseEntity<>(returnFranchise, status);
     }
 }

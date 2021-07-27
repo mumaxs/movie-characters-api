@@ -17,7 +17,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @Column(name = "title")
     private String title;
@@ -72,6 +72,14 @@ public class Movie {
         }
     }
 
+    public Franchise getFranchise() {
+        return franchise;
+    }
+
+    public void setFranchise(Franchise franchise) {
+        this.franchise = franchise;
+    }
+
     public List<Character> getCharacters() {
         return characters;
     }
@@ -80,11 +88,11 @@ public class Movie {
         this.characters = characters;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

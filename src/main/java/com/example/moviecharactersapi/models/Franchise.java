@@ -16,7 +16,7 @@ public class Franchise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -24,7 +24,7 @@ public class Franchise {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "franchise", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "franchise")
     List<Movie> movies;
 
     @JsonGetter("movies")
@@ -45,11 +45,11 @@ public class Franchise {
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
     }
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
