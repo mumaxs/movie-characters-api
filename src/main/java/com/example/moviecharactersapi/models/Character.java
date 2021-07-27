@@ -3,7 +3,9 @@ package com.example.moviecharactersapi.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Character {
@@ -30,17 +32,26 @@ public class Character {
             joinColumns = {@JoinColumn(name = "character_id")},
             inverseJoinColumns = {@JoinColumn(name = "movie_id")}
     )
-    public List<Movie> movies;
+    public List<Movie> movies = new ArrayList<>();
 
-    /*@JsonGetter("movies")
-    public List<String> charactersGetter() {
-        if (characters!= null) {
-            return characters.stream()
-                    .map(character -> {
-                        return
-                    })
+    @JsonGetter("movies")
+    public List<String> moviesGetter() {
+        if (movies!= null) {
+            return movies.stream()
+                    .map(movie -> {
+                        return "/api/v1/movies/" + movie.getId();
+                    }).collect(Collectors.toList());
         }
-    }*/
+        return null;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
 
     public long getId() {
         return id;

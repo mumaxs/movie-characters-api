@@ -1,8 +1,16 @@
 package com.example.moviecharactersapi.models;
 
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Movie {
@@ -29,12 +37,48 @@ public class Movie {
     @Column(name = "trailer")
     private String trailerURL;
 
-    @ManyToMany(mappedBy = "movies")
-    public List<Character> characters;
+    //@ManyToMany(mappedBy = "movies")
+    //public List<Character> characters = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "character_movies",
+            joinColumns = {@JoinColumn(name = "movie_id")},
+            inverseJoinColumns = {@JoinColumn(name = "character_id")}
+    )
+    public List<Character> characters = new ArrayList<>();
+
+    @JsonGetter("characters")
+    public List <String> charactersGetter() {
+        if (characters!= null) {
+            return characters.stream()
+                    .map(character -> {
+                        return "/api/v1/characters/" + character.getId();
+                    }).collect(Collectors.toList());
+        }
+        return null;
+    }
 
     @ManyToOne
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;
+
+    @JsonGetter("franchise")
+    public String franchise() {
+        if (franchise != null) {
+            return "/api/v1/franchises/" + franchise.getId();
+        } else {
+            return null;
+        }
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
 
     public long getId() {
         return id;
