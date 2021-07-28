@@ -30,14 +30,21 @@ public class MovieController {
         return new ResponseEntity<>(returnMovie, status);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateMovie(@PathVariable int id, @RequestBody Movie movie) {
+    @GetMapping()
+    public ResponseEntity <List<Movie>> getAllMovies() {
+        List<Movie> movies = movieRepository.findAll();
+        HttpStatus resp = HttpStatus.OK;
+        return new ResponseEntity<>(movies, resp);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Movie> getMovie(@PathVariable int id){
         Movie returnMovie = new Movie();
         HttpStatus status;
 
         if (movieRepository.existsById(id)) {
             status = HttpStatus.OK;
-            returnMovie = movieRepository.save(movie);
+            returnMovie = movieRepository.findById(id).get();
         } else {
             status = HttpStatus.NOT_FOUND;
         }
@@ -56,6 +63,20 @@ public class MovieController {
             status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(characterList, status);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Movie> updateMovie(@PathVariable int id, @RequestBody Movie movie) {
+        Movie returnMovie = new Movie();
+        HttpStatus status;
+
+        if (movieRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            returnMovie = movieRepository.save(movie);
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(returnMovie, status);
     }
 
     /**

@@ -24,6 +24,13 @@ public class FranchiseController {
     @Autowired
     private MovieRepository movieRepository;
 
+    @PostMapping
+    public ResponseEntity<Franchise> addFranchise(@RequestBody Franchise franchise) {
+        Franchise add = franchiseRepository.save(franchise);
+        HttpStatus status = HttpStatus.CREATED;
+        return new ResponseEntity<>(add, status);
+    }
+
     @GetMapping()
     public ResponseEntity <List<Franchise>> getAllFranchises() {
         List<Franchise> franchises = franchiseRepository.findAll();
@@ -78,31 +85,6 @@ public class FranchiseController {
         return new ResponseEntity<>(characterList, status);
     }
 
-    @PostMapping
-    public ResponseEntity<Franchise> addFranchise(@RequestBody Franchise franchise) {
-        Franchise add = franchiseRepository.save(franchise);
-        HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(add, status);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Franchise> deleteFranchiseById(@PathVariable int id) {
-        Franchise franchise = franchiseRepository.getById(id);
-        HttpStatus status;
-
-        if (franchiseRepository.existsById(id)){
-            for (Movie movie: franchise.getMovies()) {
-                movie.setFranchise(null);
-            }
-            franchiseRepository.deleteById(id);
-            status = HttpStatus.NO_CONTENT;
-
-        } else {
-            status = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(status);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Franchise> updateFranchise(@PathVariable int id, @RequestBody Franchise franchise) {
         Franchise returnFranchise = new Franchise();
@@ -137,5 +119,23 @@ public class FranchiseController {
             status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(returnFranchise, status);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Franchise> deleteFranchiseById(@PathVariable int id) {
+        Franchise franchise = franchiseRepository.getById(id);
+        HttpStatus status;
+
+        if (franchiseRepository.existsById(id)){
+            for (Movie movie: franchise.getMovies()) {
+                movie.setFranchise(null);
+            }
+            franchiseRepository.deleteById(id);
+            status = HttpStatus.NO_CONTENT;
+
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(status);
     }
 }
