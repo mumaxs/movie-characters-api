@@ -45,6 +45,7 @@ public class Franchise {
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
     }
+
     public int getId() {
         return id;
     }

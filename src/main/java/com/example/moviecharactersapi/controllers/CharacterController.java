@@ -1,6 +1,7 @@
 package com.example.moviecharactersapi.controllers;
 
 import com.example.moviecharactersapi.models.Character;
+import com.example.moviecharactersapi.models.Franchise;
 import com.example.moviecharactersapi.repositories.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,17 @@ public class CharacterController {
         HttpStatus status = HttpStatus.CREATED;
         return new ResponseEntity<>(returnCharacter, status);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Character> updateCharacter(@PathVariable int id, @RequestBody Character character) {
+        Character returnCharacter = new Character();
+        HttpStatus status;
 
-
+        if (id != character.getId()) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(returnCharacter, status);
+        }
+        returnCharacter = characterRepository.save(character);
+        status = HttpStatus.NO_CONTENT;
+        return new ResponseEntity<>(returnCharacter, status);
+    }
 }
