@@ -1,10 +1,8 @@
 package com.example.moviecharactersapi.controllers;
 
 import com.example.moviecharactersapi.models.Character;
-import com.example.moviecharactersapi.models.Franchise;
 import com.example.moviecharactersapi.models.Movie;
 import com.example.moviecharactersapi.repositories.CharacterRepository;
-import com.example.moviecharactersapi.repositories.FranchiseRepository;
 import com.example.moviecharactersapi.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,12 +35,12 @@ public class MovieController {
         Movie returnMovie = new Movie();
         HttpStatus status;
 
-        if (id != movie.getId()) {
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnMovie, status);
+        if (movieRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            returnMovie = movieRepository.save(movie);
+        } else {
+            status = HttpStatus.NOT_FOUND;
         }
-        returnMovie = movieRepository.save(movie);
-        status = HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(returnMovie, status);
     }
 
@@ -70,18 +68,35 @@ public class MovieController {
     public ResponseEntity<Movie> updateMovie(@PathVariable int id, @RequestBody int[] character){
         Movie returnMovie = new Movie();
         HttpStatus status;
-/*        if(id != movie.getId()){
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnMovie, status);
-        }*/
-        Movie movie = movieRepository.getById(id);
-        List<Character> temp = movie.getCharacters();
-        for (int i = 0; i < character.length; i++) {
-            temp.add(characterRepository.getById(character[i]));
+
+        if (movieRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            Movie movie = movieRepository.getById(id);
+
+            List<Character> temp = movie.getCharacters();
+            for (int i = 0; i < character.length; i++) {
+                temp.add(characterRepository.getById(character[i]));
+            }
+            movie.setCharacters(temp);
+            returnMovie = movieRepository.save(movie);
+
+        } else {
+            status = HttpStatus.NOT_FOUND;
         }
-        movie.setCharacters(temp);
-        returnMovie = movieRepository.save(movie);
-        status = HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(returnMovie, status);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Movie> deleteMovieById(@PathVariable int id) {
+        Movie movie = movieRepository.getById(id);
+        HttpStatus status;
+
+        if (movieRepository.existsById(id)) {
+            movieRepository.deleteById(id);
+            status = HttpStatus.NO_CONTENT;
+        } else {
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(status);
     }
 }
