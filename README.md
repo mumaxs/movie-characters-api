@@ -1,6 +1,6 @@
 # Movie Characters API
 
-##Assignment
+## Assignment
 
 The assignment was to create a PostGreSQL database using Hibernate and later expose it through a Web API in Spring Web. The content of the assignment was about different movies and characters, as well as different types of franchises and how these interact with each other. Furhtermore, this task was performed through pair programming with equal contribution. 
 
