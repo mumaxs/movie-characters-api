@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents a movie with details such as title, genre, release year, director, picture and trailer.
+ * The entity represent the tables in the database for a movie.
+ */
 @Entity
 public class Movie {
 
@@ -33,9 +37,10 @@ public class Movie {
     @Column(name = "trailer")
     private String trailerURL;
 
-    //@ManyToMany(mappedBy = "movies")
-    //public List<Character> characters = new ArrayList<>();
-
+    /**
+     * A movie can be related to several characters, hence there is a many to many relationship to the entity Character.
+     * A joining table is created within Movie and Character with following foreign keys representing movieIds and characterIds.
+     */
     @ManyToMany
     @JoinTable(
             name = "character_movies",
@@ -44,6 +49,9 @@ public class Movie {
     )
     public List<Character> characters = new ArrayList<>();
 
+    /**
+     * @return : Returns a List with Strings representing character URLs.
+     */
     @JsonGetter("characters")
     public List <String> charactersGetter() {
         if (characters!= null) {
@@ -55,10 +63,16 @@ public class Movie {
         return null;
     }
 
+    /**
+     * Several movies can be related to a single franchise, hence a link is created to the Franchise entity.
+     */
     @ManyToOne
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;
 
+    /**
+     * @return : Returns a List with Strings representing franchise URLs.
+     */
     @JsonGetter("franchise")
     public String franchise() {
         if (franchise != null) {

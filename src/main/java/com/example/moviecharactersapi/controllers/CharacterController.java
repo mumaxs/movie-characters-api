@@ -17,6 +17,11 @@ public class CharacterController {
     @Autowired
     private CharacterRepository characterRepository;
 
+    /**
+     * Adding a character to the database
+     * @param character : Character.
+     * @return : New character object.
+     */
     @PostMapping
     public ResponseEntity<Character> addCharacter(@RequestBody Character character) {
         Character returnCharacter = characterRepository.save(character);
@@ -24,6 +29,10 @@ public class CharacterController {
         return new ResponseEntity<>(returnCharacter, status);
     }
 
+    /**
+     * Fetching all the current characters from the database.
+     * @return : Returns a List of characters.
+     */
     @GetMapping()
     public ResponseEntity<List<Character>> getAllCharacters() {
         List<Character> characters = characterRepository.findAll();
@@ -31,6 +40,11 @@ public class CharacterController {
         return new ResponseEntity<>(characters, resp);
     }
 
+    /**
+     * Fetch a character from the database with a given id.
+     * @param id : Id identifier.
+     * @return : Returns the character from given id.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Character> getCharacter(@PathVariable int id){
         Character returnCharacter = new Character();
@@ -45,6 +59,12 @@ public class CharacterController {
         return new ResponseEntity<>(returnCharacter, status);
     }
 
+    /**
+     * Updates a character in the database.
+     * @param id : Given id for a specific character.
+     * @param character : Character object with the updates.
+     * @return : Returns an updated character object.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Character> updateCharacter(@PathVariable int id, @RequestBody Character character) {
         Character returnCharacter = new Character();
@@ -59,11 +79,14 @@ public class CharacterController {
         return new ResponseEntity<>(returnCharacter, status);
     }
 
+    /**
+     * Deleting a character from the database.
+     * @param id : Given id for a specific character.
+     * @return : Returns HTTP status.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Character> deleteCharacterById(@PathVariable int id) {
-        Character character = characterRepository.getById(id);
         HttpStatus status;
-
         if (characterRepository.existsById(id)) {
             characterRepository.deleteById(id);
             status = HttpStatus.NO_CONTENT;

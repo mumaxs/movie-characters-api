@@ -24,6 +24,11 @@ public class FranchiseController {
     @Autowired
     private MovieRepository movieRepository;
 
+    /**
+     * Adding a franchise to the database.
+     * @param franchise : Franchise.
+     * @return : New franchise object.
+     */
     @PostMapping
     public ResponseEntity<Franchise> addFranchise(@RequestBody Franchise franchise) {
         Franchise add = franchiseRepository.save(franchise);
@@ -31,6 +36,10 @@ public class FranchiseController {
         return new ResponseEntity<>(add, status);
     }
 
+    /**
+     * Fetching all the current franchises from the database.
+     * @return : Returns a List of franchises.
+     */
     @GetMapping()
     public ResponseEntity <List<Franchise>> getAllFranchises() {
         List<Franchise> franchises = franchiseRepository.findAll();
@@ -38,6 +47,11 @@ public class FranchiseController {
         return new ResponseEntity<>(franchises, status);
     }
 
+    /**
+     * Fetch a franchise from the database with a given id.
+     * @param id : Id identifier.
+     * @return : Returns the franchise from given id.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Franchise> getFranchise(@PathVariable int id){
         Franchise returnFranchise = new Franchise();
@@ -52,6 +66,11 @@ public class FranchiseController {
         return new ResponseEntity<>(returnFranchise, status);
     }
 
+    /**
+     * Fetching movies withing a specific franchise.
+     * @param id : Given id for a specific franchise.
+     * @return : Returns a List of movies withing the specific franchise.
+     */
     @GetMapping("/movies/{id}")
     public ResponseEntity<List<Movie>> getMoviesWithinFranchise(@PathVariable int id) {
         List<Movie> movieList = new ArrayList<>();
@@ -66,6 +85,11 @@ public class FranchiseController {
         return new ResponseEntity<>(movieList, status);
     }
 
+    /**
+     * Fetching characters which all belongs to a specific franchise.
+     * @param id : Given id for the specific franchise.
+     * @return : Returns a List of characters related to the specific franchise.
+     */
     @GetMapping("/characters/{id}")
     public ResponseEntity<List<Character>> getCharactersWithinFranchise(@PathVariable int id) {
         List<Character> characterList = new ArrayList<>();
@@ -85,6 +109,12 @@ public class FranchiseController {
         return new ResponseEntity<>(characterList, status);
     }
 
+    /**
+     * Updates a franchise in the database.
+     * @param id : Given id for a specific franchise.
+     * @param franchise : Franchise object with the updates.
+     * @return : Returns an updated franchise object.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Franchise> updateFranchise(@PathVariable int id, @RequestBody Franchise franchise) {
         Franchise returnFranchise = new Franchise();
@@ -99,6 +129,12 @@ public class FranchiseController {
         return new ResponseEntity<>(returnFranchise, status);
     }
 
+    /**
+     * Update movies which belongs to a specific franchise.
+     * @param id : Given id for a specific franchise.
+     * @param movies : Array of movies.
+     * @return : Returns franchise with updated movies.
+     */
     @PutMapping("{id}/update/movies")
     public ResponseEntity<Franchise> updateMovie(@PathVariable int id, @RequestBody int[] movies){
         Franchise returnFranchise = new Franchise();
@@ -121,6 +157,11 @@ public class FranchiseController {
         return new ResponseEntity<>(returnFranchise, status);
     }
 
+    /**
+     * Deleting a franchise from the database.
+     * @param id : Given id for a specific franchise.
+     * @return : Returns HTTP status.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Franchise> deleteFranchiseById(@PathVariable int id) {
         Franchise franchise = franchiseRepository.getById(id);

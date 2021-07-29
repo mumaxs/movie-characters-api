@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents a character with details such as full name, alias, gender and a picture.
+ * The entity represent the tables in the database for a character.
+ */
 @Entity
 public class Character {
 
@@ -26,6 +30,10 @@ public class Character {
     @Column(name = "picture")
     private String pictureURL;
 
+    /**
+     * A character can be related to different movies, hence there is a many to many relationship to the entity Movie.
+     * A joining table is created within Movie and Character with following foreign keys representing movieIds and characterIds.
+     */
     @ManyToMany
     @JoinTable(
             name = "character_movies",
@@ -34,6 +42,9 @@ public class Character {
     )
     public List<Movie> movies = new ArrayList<>();
 
+    /**
+     * @return : Returns a List with Strings representing movie URLs.
+     */
     @JsonGetter("movies")
     public List<String> moviesGetter() {
         if (movies!= null) {
