@@ -96,10 +96,10 @@ public class MovieController {
         HttpStatus status;
 
         if (movieRepository.existsById(id)) {
-            status = HttpStatus.OK;
+            status = HttpStatus.NO_CONTENT;
             returnMovie = movieRepository.save(movie);
         } else {
-            status = HttpStatus.NOT_FOUND;
+            status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(returnMovie, status);
     }
@@ -116,7 +116,7 @@ public class MovieController {
         HttpStatus status;
 
         if (movieRepository.existsById(id)) {
-            status = HttpStatus.OK;
+            status = HttpStatus.NO_CONTENT;
             Movie movie = movieRepository.getById(id);
 
             List<Character> temp = movie.getCharacters();
@@ -127,7 +127,7 @@ public class MovieController {
             returnMovie = movieRepository.save(movie);
 
         } else {
-            status = HttpStatus.NOT_FOUND;
+            status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(returnMovie, status);
     }
@@ -142,7 +142,7 @@ public class MovieController {
         HttpStatus status;
         if (movieRepository.existsById(id)) {
             movieRepository.deleteById(id);
-            status = HttpStatus.NO_CONTENT;
+            status = HttpStatus.OK;
         } else {
             status = HttpStatus.BAD_REQUEST;
         }

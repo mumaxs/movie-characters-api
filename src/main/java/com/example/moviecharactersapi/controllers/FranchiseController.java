@@ -141,7 +141,7 @@ public class FranchiseController {
         HttpStatus status;
 
         if (franchiseRepository.existsById(id)) {
-            status = HttpStatus.OK;
+            status = HttpStatus.NO_CONTENT;
             Franchise franchise = franchiseRepository.getById(id);
             List<Movie> temp = franchise.getMovies();
 
@@ -152,7 +152,7 @@ public class FranchiseController {
             franchise.setMovies(temp);
             returnFranchise = franchiseRepository.save(franchise);
         } else {
-            status = HttpStatus.NOT_FOUND;
+            status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(returnFranchise, status);
     }
@@ -172,10 +172,10 @@ public class FranchiseController {
                 movie.setFranchise(null);
             }
             franchiseRepository.deleteById(id);
-            status = HttpStatus.NO_CONTENT;
+            status = HttpStatus.OK;
 
         } else {
-            status = HttpStatus.BAD_REQUEST;
+            status = HttpStatus.NO_CONTENT;
         }
         return new ResponseEntity<>(status);
     }

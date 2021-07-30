@@ -89,7 +89,7 @@ public class CharacterController {
         HttpStatus status;
         if (characterRepository.existsById(id)) {
             characterRepository.deleteById(id);
-            status = HttpStatus.NO_CONTENT;
+            status = HttpStatus.OK;
         } else {
             status = HttpStatus.BAD_REQUEST;
         }
