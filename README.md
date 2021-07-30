@@ -2,7 +2,7 @@
 
 ## Assignment
 
-The assignment was to create a PostGreSQL database using Hibernate and later expose it through a Web API in Spring Web. The content of the assignment was about different movies and characters, as well as different types of franchises and how these interact with each other. Furhtermore, this task was performed through pair programming with equal contribution. 
+The assignment was to create a PostGreSQL database using Hibernate and later expose it through a Web API in Spring Web. The content of the assignment was about different movies and characters, as well as different types of franchises and how these interact with each other. Furhtermore, this task was performed through pair programming with equal contribution. You can read about the assignment [here](Assignment 3_Java_Web API creation with Hibernate).
 
 ## Project structure
 
@@ -10,6 +10,8 @@ The project structure involves three different entities in Movie, Character and 
 
 ## Documentation
 Swagger API has been included to the project to handle API documentation. Following are also a postman_collection file with calls to the API endpoints. [Swagger URL](http://localhost:8080/swagger-ui.html)
+
+Read full assignment [here](Assignment 3_Java_Web API creation with Hibernate)
 
 ## Members
 **Joakim Österberg & Marcus Thornemo Larsson**
