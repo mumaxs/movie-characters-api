@@ -11,7 +11,5 @@ The project structure involves three different entities in Movie, Character and 
 ## Documentation
 Swagger API has been included to the project to handle API documentation. Following are also a postman_collection file with calls to the API endpoints. [Swagger URL](http://localhost:8080/swagger-ui.html)
 
-Read full assignment [here](Assignment 3_Java_Web API creation with Hibernate)
-
 ## Members
 **Joakim Österberg & Marcus Thornemo Larsson**
